@@ -53,4 +53,9 @@ RUN docker-php-ext-install gd && \
     docker-php-ext-install gd
 
 # Install the composer 
-RUN curl -sS https://getcomposer.org/installer | php mv composer.phar /usr/local/bin/composer  && composer config -g repo.packagist composer https://mirrors.aliyun.com/composer/
+RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" && \ 
+    php composer-setup.php && \
+    mv composer.phar /usr/local/bin/composer && \
+    php -r "unlink('composer-setup.php');"
+
+
